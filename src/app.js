@@ -4,13 +4,31 @@ var util = require('util');
 
 var vasync = require('vasync');
 
-var apiKey = '{{the api key}}';
-var hostname = '{{the server name or ip address}}';
-var jobId = '{{job id}}';
-var password = '{{the password}}';
-var username = '{{the username}}';
+//******************************************************************************
+// configuration section
+//******************************************************************************
+
+// set the host name as fiery server name or ip address
+var hostname = 'the_server_name_or_ip_address';
+
+// set the key to access Fiery API
+var apiKey = 'the_api_key';
+
+// set the username to login to the fiery
+var username = 'the_username';
+
+// set the password to login to the fiery
+var password = 'the_password';
+
+// set the job id on the fiery to retrieve job information and preview
+var jobId = 'the_job_id';
 
 
+//******************************************************************************
+// sample code group into multiple methods
+//******************************************************************************
+
+// get the first page preview of the job
 function getJobPreviewSample(cookie, callback) {
     var options = {
         hostname: hostname,
@@ -41,6 +59,7 @@ function getJobPreviewSample(cookie, callback) {
     req.end();
 }
 
+// get job information from all jobs on the fiery
 function getJobsSample(cookie, callback) {
     var options = {
         hostname: hostname,
@@ -71,6 +90,7 @@ function getJobsSample(cookie, callback) {
     req.end();
 }
 
+// get job information of a single job on the fiery
 function getSingleJobSample(cookie, callback) {
     var options = {
         hostname: hostname,
@@ -101,6 +121,7 @@ function getSingleJobSample(cookie, callback) {
     req.end();
 }
 
+// login to the fiery
 function loginSample(callback) {
     var loginJson = {
         username: username,
@@ -139,6 +160,7 @@ function loginSample(callback) {
     req.end();
 }
 
+// logout from the fiery
 function logoutSample(cookie, callback) {
     var options = {
         hostname: hostname,
@@ -169,6 +191,7 @@ function logoutSample(cookie, callback) {
     req.end();
 }
 
+// send a print action to a job on the fiery
 function printJobSample(cookie, callback) {
     var options = {
         hostname: hostname,
@@ -202,6 +225,7 @@ function printJobSample(cookie, callback) {
 }
 
 
+// main method executing all sample code
 function main() {
     vasync.waterfall([
         loginSample,

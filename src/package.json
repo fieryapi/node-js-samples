@@ -14,5 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "vasync": "^1.6.3"
-  }
+  },
+  "engines": {
+    "node": ">=0.10.3"
+  },
+  "private": true
 }

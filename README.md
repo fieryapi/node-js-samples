@@ -1,6 +1,6 @@
-## node-js-samples
+## node.js samples
 
-Fiery job management samples. Setup the modules with `npm install` then execute the script with `node app`.
+Fiery job management samples. Setup the modules in `src` directory with `npm install`, modify `app.js` in the configuration section to connect to the Fiery then execute the script with `node app`.
 
 **Note** Always use secure connection (HTTPS) when connecting to Fiery API in production.
 
@@ -34,6 +34,7 @@ var req = https.request(options, function (res) {
     }).on('end', function () {
         // do something with the response here
 
+        // cookie is needed for other api requests
         var cookie = res.headers['set-cookie'];
     });
 });
