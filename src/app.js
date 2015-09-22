@@ -1,8 +1,10 @@
+var fs = require('fs');
 var http = require('http');
 var https = require('https');
 var util = require('util');
 
 var vasync = require('vasync');
+var restler = require('restler');
 
 //******************************************************************************
 // configuration section
@@ -23,6 +25,8 @@ var password = 'the_password';
 // set the job id on the fiery to retrieve job information and preview
 var jobId = 'the_job_id';
 
+// set the full file path for job submission
+var fullPath = 'the_job_content_full_file_path';
 
 //******************************************************************************
 // sample code group into multiple methods
@@ -191,8 +195,35 @@ function logoutSample(cookie, callback) {
     req.end();
 }
 
+// create a new job on the fiery server
+function postJobContentSample(cookie, callback) {
+    // hack - fiery api does not have full support for multipart/form-data with
+    // chunked encoding so file size is needed before sending the request.
+    fs.stat(fullPath, function(err, stats) {
+        restler.post('https://' + hostname + '/live/api/v2/jobs', {
+            multipart: true,
+            headers: {
+                cookie: cookie,
+            },
+
+            rejectUnauthorized: false,
+
+            data: {
+                file: restler.file(fullPath, null, stats.size, null, 'application/octet-stream'),
+            },
+        }).on('complete', function(response) {
+            console.log();
+            console.log('Logout');
+            console.log(response);
+
+            callback(null, cookie);
+        });
+    });
+}
+
 // send a print action to a job on the fiery
 function printJobSample(cookie, callback) {
+
     var options = {
         hostname: hostname,
         path: '/live/api/v2/jobs/' + jobId + '/print',
@@ -229,6 +260,7 @@ function printJobSample(cookie, callback) {
 function main() {
     vasync.waterfall([
         loginSample,
+        postJobContentSample,
         getJobsSample,
         getSingleJobSample,
         printJobSample,

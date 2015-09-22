@@ -73,6 +73,29 @@ req.end();
 ```
 
 
+### Create a new job
+
+```js
+fullPath = 'the_job_content_full_file_path'  # e.g. d:\business_card.pdf
+fs.stat(fullPath, function(err, stats) {
+    restler.post('https://' + hostname + '/live/api/v2/jobs', {
+        multipart: true,
+        headers: {
+            cookie: cookie,
+        },
+
+        rejectUnauthorized: false,
+
+        data: {
+            file: restler.file(fullPath, null, stats.size, null, 'application/octet-stream'),
+        },
+    }).on('complete', function(response) {
+        // do something with the response here
+    });
+});
+```
+
+
 ### Get jobs
 
 ```js

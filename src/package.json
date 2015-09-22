@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "restler": "^3.3.0",
     "vasync": "^1.6.3"
   },
   "engines": {
