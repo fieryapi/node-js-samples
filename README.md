@@ -88,6 +88,9 @@ fs.stat(fullPath, function(err, stats) {
 
         data: {
             file: restler.file(fullPath, null, stats.size, null, 'application/octet-stream'),
+
+            // override default number of copies to 10 copies
+            'attributes[num copies]': 10,
         },
     }).on('complete', function(response) {
         // do something with the response here
@@ -128,6 +131,7 @@ req.end();
 ### Get single job
 
 ```js
+var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
     path: '/live/api/v2/jobs/' + jobId,
@@ -154,9 +158,48 @@ req.end();
 ```
 
 
+### Update attributes of a job
+
+```js
+var jobId = 'the_job_id';
+var jobJson = {
+    attributes: {
+        "num copies": 1,
+    },
+};
+
+var options = {
+    hostname: hostname,
+    path: '/live/api/v2/jobs/' + jobId,
+    method: 'PUT',
+    headers: {
+        content_type: 'application/json',
+        cookie: cookie,
+    },
+
+    rejectUnauthorized: false,
+};
+
+var req = https.request(options, function (res) {
+    var response = '';
+
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+        response = response + chunk;
+    }).on('end', function () {
+        // do something with the response here
+    });
+});
+
+req.write(JSON.stringify(jobJson));
+req.end();
+```
+
+
 ### Print a job
 
 ```js
+var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
     path: '/live/api/v2/jobs/' + jobId + '/print',
@@ -188,6 +231,7 @@ req.end();
 ### Get job preview
 
 ```js
+var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
     path: '/live/api/v2/jobs/' + jobId + '/preview/1',

@@ -210,10 +210,13 @@ function postJobContentSample(cookie, callback) {
 
             data: {
                 file: restler.file(fullPath, null, stats.size, null, 'application/octet-stream'),
+
+                // override default number of copies to 10 copies
+                'attributes[num copies]': 10,
             },
         }).on('complete', function(response) {
             console.log();
-            console.log('Logout');
+            console.log('Submit a new job');
             console.log(response);
 
             callback(null, cookie);
@@ -221,9 +224,8 @@ function postJobContentSample(cookie, callback) {
     });
 }
 
-// send a print action to a job on the fiery
+// send a print action to a job on the fiery server
 function printJobSample(cookie, callback) {
-
     var options = {
         hostname: hostname,
         path: '/live/api/v2/jobs/' + jobId + '/print',
@@ -255,6 +257,45 @@ function printJobSample(cookie, callback) {
     req.end();
 }
 
+// update a job attribute value on the fiery server
+function updateJobAttributeSample(cookie, callback) {
+    var jobJson = {
+        attributes: {
+            "num copies": 1,
+        },
+    };
+
+    var options = {
+        hostname: hostname,
+        path: '/live/api/v2/jobs/' + jobId,
+        method: 'PUT',
+        headers: {
+            content_type: 'application/json',
+            cookie: cookie,
+        },
+
+        rejectUnauthorized: false,
+    };
+
+    var req = https.request(options, function (res) {
+        var response = '';
+
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            response = response + chunk;
+        }).on('end', function () {
+            console.log();
+            console.log('Update a job');
+            console.log(response);
+
+            callback(null, cookie);
+        });
+    });
+
+    req.write(JSON.stringify(jobJson));
+    req.end();
+}
+
 
 // main method executing all sample code
 function main() {
@@ -263,6 +304,7 @@ function main() {
         postJobContentSample,
         getJobsSample,
         getSingleJobSample,
+        updateJobAttributeSample,
         printJobSample,
         getJobPreviewSample,
         logoutSample,
