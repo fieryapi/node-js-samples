@@ -16,7 +16,7 @@ var loginJson = {
 
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/login',
+    path: '/live/api/v3/login',
     method: 'POST',
     headers: {
         content_type: 'application/json',
@@ -49,7 +49,7 @@ req.end();
 ```js
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/logout',
+    path: '/live/api/v3/logout',
     method: 'POST',
     headers: {
         cookie: cookie,
@@ -78,7 +78,7 @@ req.end();
 ```js
 fullPath = 'the_job_content_full_file_path'  # e.g. d:\business_card.pdf
 fs.stat(fullPath, function(err, stats) {
-    restler.post('https://' + hostname + '/live/api/v2/jobs', {
+    restler.post('https://' + hostname + '/live/api/v3/jobs', {
         multipart: true,
         headers: {
             cookie: cookie,
@@ -104,7 +104,7 @@ fs.stat(fullPath, function(err, stats) {
 ```js
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/jobs',
+    path: '/live/api/v3/jobs',
     method: 'GET',
     headers: {
         cookie: cookie,
@@ -134,7 +134,7 @@ req.end();
 var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/jobs/' + jobId,
+    path: '/live/api/v3/jobs/' + jobId,
     method: 'GET',
     headers: {
         cookie: cookie,
@@ -170,7 +170,7 @@ var jobJson = {
 
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/jobs/' + jobId,
+    path: '/live/api/v3/jobs/' + jobId,
     method: 'PUT',
     headers: {
         content_type: 'application/json',
@@ -202,7 +202,7 @@ req.end();
 var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/jobs/' + jobId + '/print',
+    path: '/live/api/v3/jobs/' + jobId + '/print',
     method: 'PUT',
     headers: {
         content_type: 'application/json',
@@ -234,7 +234,7 @@ req.end();
 var jobId = 'the_job_id';
 var options = {
     hostname: hostname,
-    path: '/live/api/v2/jobs/' + jobId + '/preview/1',
+    path: '/live/api/v3/jobs/' + jobId + '/preview/1',
     method: 'GET',
     headers: {
         cookie: cookie,

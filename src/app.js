@@ -36,7 +36,7 @@ var fullPath = 'the_job_content_full_file_path';
 function getJobPreviewSample(cookie, callback) {
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/jobs/' + jobId + '/preview/1',
+        path: '/live/api/v3/jobs/' + jobId + '/preview/1',
         method: 'GET',
         headers: {
             cookie: cookie,
@@ -67,7 +67,7 @@ function getJobPreviewSample(cookie, callback) {
 function getJobsSample(cookie, callback) {
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/jobs',
+        path: '/live/api/v3/jobs',
         method: 'GET',
         headers: {
             cookie: cookie,
@@ -98,7 +98,7 @@ function getJobsSample(cookie, callback) {
 function getSingleJobSample(cookie, callback) {
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/jobs/' + jobId,
+        path: '/live/api/v3/jobs/' + jobId,
         method: 'GET',
         headers: {
             cookie: cookie,
@@ -135,7 +135,7 @@ function loginSample(callback) {
 
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/login',
+        path: '/live/api/v3/login',
         method: 'POST',
         headers: {
             content_type: 'application/json',
@@ -168,7 +168,7 @@ function loginSample(callback) {
 function logoutSample(cookie, callback) {
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/logout',
+        path: '/live/api/v3/logout',
         method: 'POST',
         headers: {
             cookie: cookie,
@@ -200,7 +200,7 @@ function postJobContentSample(cookie, callback) {
     // hack - fiery api does not have full support for multipart/form-data with
     // chunked encoding so file size is needed before sending the request.
     fs.stat(fullPath, function(err, stats) {
-        restler.post('https://' + hostname + '/live/api/v2/jobs', {
+        restler.post('https://' + hostname + '/live/api/v3/jobs', {
             multipart: true,
             headers: {
                 cookie: cookie,
@@ -228,7 +228,7 @@ function postJobContentSample(cookie, callback) {
 function printJobSample(cookie, callback) {
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/jobs/' + jobId + '/print',
+        path: '/live/api/v3/jobs/' + jobId + '/print',
         method: 'PUT',
         headers: {
             content_type: 'application/json',
@@ -267,7 +267,7 @@ function updateJobAttributeSample(cookie, callback) {
 
     var options = {
         hostname: hostname,
-        path: '/live/api/v2/jobs/' + jobId,
+        path: '/live/api/v3/jobs/' + jobId,
         method: 'PUT',
         headers: {
             content_type: 'application/json',
