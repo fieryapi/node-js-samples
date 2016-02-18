@@ -14,12 +14,15 @@ var loginJson = {
     accessrights: apiKey,
 };
 
+var payload = JSON.stringify(loginJson);
+
 var options = {
     hostname: hostname,
     path: '/live/api/v3/login',
     method: 'POST',
     headers: {
-        content_type: 'application/json',
+        'Content-Type': 'application/json',
+        'Content-Length': payload.length,
     },
 
     rejectUnauthorized: false,
@@ -39,7 +42,7 @@ var req = https.request(options, function (res) {
     });
 });
 
-req.write(JSON.stringify(loginJson));
+req.write(payload);
 req.end();
 ```
 
@@ -52,7 +55,7 @@ var options = {
     path: '/live/api/v3/logout',
     method: 'POST',
     headers: {
-        cookie: cookie,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
@@ -107,7 +110,7 @@ var options = {
     path: '/live/api/v3/jobs',
     method: 'GET',
     headers: {
-        cookie: cookie,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
@@ -137,7 +140,7 @@ var options = {
     path: '/live/api/v3/jobs/' + jobId,
     method: 'GET',
     headers: {
-        cookie: cookie,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
@@ -168,13 +171,16 @@ var jobJson = {
     },
 };
 
+var payload = JSON.stringify(jobJson);
+
 var options = {
     hostname: hostname,
     path: '/live/api/v3/jobs/' + jobId,
     method: 'PUT',
     headers: {
-        content_type: 'application/json',
-        cookie: cookie,
+        'Content-Type': 'application/json',
+        'Content-Length': payload.length,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
@@ -191,7 +197,7 @@ var req = https.request(options, function (res) {
     });
 });
 
-req.write(JSON.stringify(jobJson));
+req.write(payload);
 req.end();
 ```
 
@@ -205,8 +211,9 @@ var options = {
     path: '/live/api/v3/jobs/' + jobId + '/print',
     method: 'PUT',
     headers: {
-        content_type: 'application/json',
-        cookie: cookie,
+        'Content-Type': 'application/json',
+        'Content-Length': 2,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
@@ -237,7 +244,7 @@ var options = {
     path: '/live/api/v3/jobs/' + jobId + '/preview/1',
     method: 'GET',
     headers: {
-        cookie: cookie,
+        Cookie: cookie,
     },
 
     rejectUnauthorized: false,
